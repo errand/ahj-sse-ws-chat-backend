@@ -1,0 +1,43 @@
+{
+  "name": "ahj-sse-ws-chat-backend",
+  "version": "1.0.0",
+  "description": "AHJ Homework. Websockets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/errand/ahj-sse-ws-chat-backend.git"
+  },
+  "author": "Aleksandr Shatskih",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/errand/ahj-sse-ws-chat-backend/issues"
+  },
+  "homepage": "https://github.com/errand/ahj-sse-ws-chat-backend#readme",
+  "dependencies": {
+    "core-js": "^3.20.2",
+    "forever": "^4.0.3",
+    "http-event-stream": "^0.2.0",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.1.1",
+    "koa-static": "^5.0.0",
+    "uuid": "^8.3.2",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-transform-runtime": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
+    "babel-jest": "^27.4.6",
+    "babel-loader": "^8.2.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-import": "^2.25.4"
+  }
+}
