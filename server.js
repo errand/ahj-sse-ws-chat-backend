@@ -1,10 +1,15 @@
 /* eslint-disable no-fallthrough */
-const ws = require('ws');
+const WS = require('ws');
+const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
 
 const app = new Koa();
 const PORT = process.env.PORT || 7070;
+
+const Chat = require('./src/Chat');
+
+const ctrl = new Chat();
 
 app.use(koaBody({
   text: true,
@@ -17,6 +22,7 @@ app.use(koaBody({
 app.use(async (ctx, next) => {
   const origin = ctx.request.get('Origin');
   if (!origin) {
+    // eslint-disable-next-line no-return-await
     return await next();
   }
 
@@ -45,37 +51,43 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Koa server has been started on port ${PORT} ...`));
+app.use(async (ctx) => {
+  const { method, id } = ctx.request.query;
+  // console.log(ctx.request.query);
+  switch (method) {
+    case 'allMessages':
+      try {
+        const result = ctrl.allMessages();
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+    case 'createUser':
+      try {
+        const object = ctx.request.body;
 
-ws.binaryType = 'blob'; // arraybuffer
-ws.addEventListener('open', () => {
-  console.log('connected');
-  // After this we can send messages
-  if (ws.readyState === WebSocket.OPEN) {
-    ws.send('hello!');
-  } else {
-    // Reconnect
+        const result = ctrl.createUser(object);
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
+
+    default:
+      ctx.response.body = `Method "${method}" is not known.`;
+      ctx.response.status = 404;
   }
 });
-ws.addEventListener('message', (evt) => {
-// handle evt.data
-  console.log(evt);
-});
-ws.addEventListener('close', (evt) => {
-  console.log('connection closed', evt);
-// After this we can't send messages
-});
-ws.addEventListener('error', () => {
-  console.log('error');
-});
 
-const port = process.env.PORT || 7070;
 const server = http.createServer(app.callback());
-const wsServer = new ws.Server({ server });
+
+const wsServer = new WS.Server({ server });
+
 wsServer.on('connection', (ws, req) => {
   const errCallback = (err) => {
     if (err) {
-      // TODO: handle error
+      console.log(err);
     }
   };
   ws.on('message', msg => {
@@ -84,4 +96,5 @@ wsServer.on('connection', (ws, req) => {
   });
   ws.send('welcome', errCallback);
 });
-server.listen(port);
+
+server.listen(PORT, () => console.log(`Koa server has been started on port ${PORT} ...`));

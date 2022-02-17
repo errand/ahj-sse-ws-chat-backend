@@ -4,7 +4,12 @@
   "description": "AHJ Homework. Websockets",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "npm install",
+    "start": "forever server.js",
+    "watch": "forever -w server.js"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "repository": {
     "type": "git",
