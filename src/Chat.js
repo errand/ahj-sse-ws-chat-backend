@@ -15,6 +15,7 @@ class Chat {
   }
 
   createUser(object) {
+    console.log(object);
     const data = JSON.parse(object);
     const user = new User(data.name);
     this.users.push(user);
