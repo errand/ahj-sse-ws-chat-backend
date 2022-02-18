@@ -59,6 +59,7 @@ app.use(async (ctx) => {
       try {
         const result = ctrl.getAllUsers();
         ctx.response.body = result;
+        console.log(ctx.response.body);
       } catch (err) {
         console.error(err);
       }
@@ -74,7 +75,6 @@ app.use(async (ctx) => {
     case 'createUser':
       try {
         const object = ctx.request.body;
-        console.log(object);
         const result = ctrl.createUser(object);
         ctx.response.body = result;
       } catch (err) {
