@@ -6,6 +6,10 @@ class Chat {
     this.users = [];
   }
 
+  getAllUsers() {
+    return this.users;
+  }
+
   allMessages() {
     return this.messages;
   }

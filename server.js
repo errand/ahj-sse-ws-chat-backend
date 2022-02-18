@@ -55,6 +55,14 @@ app.use(async (ctx) => {
   const { method, id } = ctx.request.query;
   // console.log(ctx.request.query);
   switch (method) {
+    case 'getAllUsers':
+      try {
+        const result = ctrl.getAllUsers();
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
     case 'allMessages':
       try {
         const result = ctrl.allMessages();
