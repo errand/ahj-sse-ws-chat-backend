@@ -81,6 +81,15 @@ app.use(async (ctx) => {
         console.error(err);
       }
       return;
+    case 'createPost':
+      try {
+        const object = ctx.request.body;
+        const result = ctrl.createPost(object);
+        ctx.response.body = result;
+      } catch (err) {
+        console.error(err);
+      }
+      return;
 
     default:
       ctx.response.body = `Method "${method}" is not known.`;

@@ -1,8 +1,9 @@
 const User = require('./User');
+const Post = require('./Post');
 
 class Chat {
   constructor() {
-    this.messages = [];
+    this.posts = [];
     this.users = [];
   }
 
@@ -10,8 +11,8 @@ class Chat {
     return this.users;
   }
 
-  allMessages() {
-    return this.messages;
+  allPosts() {
+    return this.posts;
   }
 
   createUser(object) {
@@ -19,6 +20,13 @@ class Chat {
     const user = new User(data);
     this.users.push(user);
     return user;
+  }
+
+  createPost(object) {
+    const data = JSON.parse(object);
+    const post = new Post(data.name, data.text);
+    this.posts.push(post);
+    return post;
   }
 }
 
