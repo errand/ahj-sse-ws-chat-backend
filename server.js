@@ -64,6 +64,15 @@ app.use(async (ctx) => {
         console.error(err);
       }
       return;
+    case 'getAllPosts':
+      try {
+        const result = ctrl.getAllPosts();
+        ctx.response.body = result;
+        console.log(ctx.response.body);
+      } catch (err) {
+        console.error(err);
+      }
+      return;
     case 'allMessages':
       try {
         const result = ctrl.allMessages();

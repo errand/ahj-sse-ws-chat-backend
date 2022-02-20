@@ -11,7 +11,7 @@ class Chat {
     return this.users;
   }
 
-  allPosts() {
+  getAllPosts() {
     return this.posts;
   }
 
