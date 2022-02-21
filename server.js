@@ -126,9 +126,6 @@ wsServer.on('connection', (ws, req) => {
       .forEach((o) => o.send(JSON.stringify(post)));
   });
   ws.on('close', (msg) => {
-    console.log('close');
-
-    console.log(clients, 'clientsExit');
     const userID = JSON.parse(msg);
     [...wsServer.clients]
       .filter((o) => o.readyState === WS.OPEN)
