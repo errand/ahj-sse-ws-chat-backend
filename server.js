@@ -111,16 +111,30 @@ const server = http.createServer(app.callback());
 const wsServer = new WS.Server({ server });
 
 wsServer.on('connection', (ws, req) => {
-  const errCallback = (err) => {
-    if (err) {
-      console.log(err);
-    }
-  };
-  ws.on('message', msg => {
-    console.log('msg');
-    ws.send('response', errCallback);
+  console.log('connection');
+
+  const clients = ctrl.getAllUsers();
+
+  [...wsServer.clients]
+    .filter((o) => o.readyState === WS.OPEN)
+    .forEach((o) => o.send(JSON.stringify({ type: 'connect', user: clients[clients.length - 1] })));
+
+  ws.on('message', (msg) => {
+    const post = JSON.parse(msg);
+    [...wsServer.clients]
+      .filter((o) => o.readyState === WS.OPEN)
+      .forEach((o) => o.send(JSON.stringify(post)));
   });
-  ws.send('welcome', errCallback);
+  ws.on('close', (msg) => {
+    console.log('close');
+
+    console.log(clients, 'clientsExit');
+    const userID = JSON.parse(msg);
+    [...wsServer.clients]
+      .filter((o) => o.readyState === WS.OPEN)
+      .forEach((o) => o.send(JSON.stringify(clients)));
+    ws.close(1000, 'disconnect');
+  });
 });
 
 server.listen(PORT, () => console.log(`Koa server has been started on port ${PORT} ...`));
