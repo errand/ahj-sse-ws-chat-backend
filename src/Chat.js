@@ -24,7 +24,7 @@ class Chat {
 
   createPost(object) {
     const data = JSON.parse(object);
-    const post = new Post(data.name, data.text);
+    const post = new Post(data.user.name, data.text);
     this.posts.push(post);
     return post;
   }
