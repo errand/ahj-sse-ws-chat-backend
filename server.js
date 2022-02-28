@@ -3,8 +3,10 @@ const WS = require('ws');
 const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
+const cors = require('@koa/cors');
 
 const app = new Koa();
+app.use(cors());
 const PORT = process.env.PORT || 7070;
 
 const Chat = require('./src/Chat');
